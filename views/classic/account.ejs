@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your account | Commonplace</title>
+    <link rel="stylesheet" href="/classic-assets/style.css">
+</head>
+<body>
+    <header class="site-header"><nav class="container nav"><a class="brand" href="/classic">Commonplace <span class="edition">EJS edition</span></a><div class="nav-links"><a href="/">React edition</a><a href="/classic">Blog feed</a></div></nav></header>
+    <main class="container narrow">
+        <section class="panel auth-panel">
+            <p class="eyebrow">Your profile</p><h1>Account settings</h1>
+            <% if (error) { %><p class="message error" role="alert"><%= error %></p><% } %>
+            <% if (notice) { %><p class="message success" role="status"><%= notice %></p><% } %>
+            <form action="/classic/account" method="POST" class="form-stack">
+                <label for="user_id">User ID</label><input id="user_id" name="user_id" value="<%= user.userId %>" maxlength="255" autocomplete="username" required>
+                <label for="name">Name</label><input id="name" name="name" value="<%= user.name %>" maxlength="255" autocomplete="name" required>
+                <label for="password">New password <span class="hint">(leave blank to keep current)</span></label><input id="password" name="password" type="password" minlength="8" maxlength="72" autocomplete="new-password">
+                <button class="button primary" type="submit">Save changes</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

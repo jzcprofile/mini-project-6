@@ -1,0 +1,32 @@
+{
+  "name": "cs312",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "concurrently \"node app.js\" \"vite --config client/vite.config.js --host 0.0.0.0\"",
+    "build": "vite build --config client/vite.config.js",
+    "pretest": "npm run build",
+    "start": "node app.js",
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^10.0.0",
+    "ejs": "^7.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "pg": "^8.16.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "vite": "^7.1.7"
+  }
+}

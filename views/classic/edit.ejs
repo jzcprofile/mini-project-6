@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit post | Commonplace</title>
+    <link rel="stylesheet" href="/classic-assets/style.css">
+</head>
+<body>
+    <header class="site-header"><nav class="container nav"><a class="brand" href="/classic">Commonplace <span class="edition">EJS edition</span></a><div class="nav-links"><a href="/">React edition</a><a href="/classic">Blog feed</a><a href="/classic/account">Account</a></div></nav></header>
+    <main class="container narrow">
+        <section class="panel auth-panel">
+            <p class="eyebrow">Make it yours</p><h1>Edit your post</h1>
+            <form action="/classic/edit/<%= post.id %>" method="POST" class="form-stack">
+                <label for="title">Title</label><input id="title" name="title" value="<%= post.title %>" maxlength="255" required>
+                <label for="content">Your post</label><textarea id="content" name="content" rows="10" maxlength="50000" required><%= post.content %></textarea>
+                <div class="form-actions"><button class="button primary" type="submit">Save changes</button><a class="button secondary" href="/classic">Cancel</a></div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

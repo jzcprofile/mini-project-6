@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thoughtful stories from the Commonplace community.">
+    <title>Commonplace | EJS blog feed</title>
+    <link rel="stylesheet" href="/classic-assets/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="container nav">
+            <a class="brand" href="/classic">Commonplace <span class="edition">EJS edition</span></a>
+            <div class="nav-links">
+                <a href="/">React edition</a>
+                <% if (user) { %>
+                    <span>Welcome, <%= user.name %></span>
+                    <a href="/classic/account">Account</a>
+                    <form action="/classic/signout" method="POST"><button class="nav-link-button" type="submit">Sign out</button></form>
+                <% } else { %>
+                    <a href="/classic/signin">Sign in</a>
+                    <a class="nav-cta" href="/classic/signup">Create account</a>
+                <% } %>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">Ideas, stories &amp; everyday discoveries</p>
+            <h1>A little space<br>to share what matters.</h1>
+            <p>Read something thoughtful, or add your own voice to the conversation.</p>
+            <% if (!user) { %><a class="button primary" href="/classic/signin">Sign in to write</a><% } %>
+        </section>
+        <% if (error) { %><p class="message error" role="alert"><%= error %></p><% } %>
+        <% if (notice) { %><p class="message success" role="status"><%= notice %></p><% } %>
+        <% if (user) { %>
+            <section class="panel compose-panel">
+                <div><p class="eyebrow">Your next story</p><h2>Write a new post</h2></div>
+                <form action="/classic/posts" method="POST" class="form-stack">
+                    <label for="title">Title</label>
+                    <input id="title" name="title" maxlength="255" placeholder="Give your story a title" required>
+                    <label for="content">Your post</label>
+                    <textarea id="content" name="content" rows="5" maxlength="50000" placeholder="What would you like to share?" required></textarea>
+                    <button class="button primary" type="submit">Publish post</button>
+                </form>
+            </section>
+        <% } %>
+        <section class="feed">
+            <div class="section-heading">
+                <div><p class="eyebrow">From the community</p><h2>Latest stories</h2></div>
+                <span class="post-count"><%= posts.length %> <%= posts.length === 1 ? "story" : "stories" %></span>
+            </div>
+            <% if (!posts.length) { %>
+                <div class="panel empty-state"><h3>No stories yet</h3><p>Check back soon for something new.</p></div>
+            <% } %>
+            <div class="post-grid">
+                <% posts.forEach(post => { %>
+                    <article class="post-card">
+                        <div class="post-meta">
+                            <span class="avatar"><%= (post.author || "U").slice(0, 1).toUpperCase() %></span>
+                            <div><strong><%= post.author %></strong><time datetime="<%= new Date(post.date).toISOString() %>"><%= new Date(post.date).toLocaleString() %></time></div>
+                        </div>
+                        <h3><%= post.title %></h3>
+                        <p class="post-content"><%= post.content %></p>
+                        <% if (user && user.userId === post.creatorUserId) { %>
+                            <div class="post-actions">
+                                <a class="button small secondary" href="/classic/edit/<%= post.id %>">Edit</a>
+                                <form action="/classic/delete/<%= post.id %>" method="POST" onsubmit="return confirm('Permanently delete this post?')">
+                                    <button class="button small danger" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        <% } %>
+                    </article>
+                <% }) %>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer"><div class="container">EJS pages share the same database and sessions as the React edition.</div></footer>
+</body>
+</html>
